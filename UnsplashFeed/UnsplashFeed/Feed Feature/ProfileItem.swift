@@ -20,3 +20,22 @@ public struct ProfileItem: Equatable, Hashable {
         self.imageURL = imageURL
     }
 }
+
+extension ProfileItem: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case username
+        case imageURL = "profile_image"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        username = try container.decode(String.self, forKey: .username)
+        let urls = try container.decode([String: URL].self, forKey: .imageURL)
+        imageURL = urls["medium"]!
+    }
+}

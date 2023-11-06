@@ -63,6 +63,63 @@ final class RemoteFeedLoaderTests: XCTestCase {
         })
     }
     
+    func test_load_deliversItemsOn200HTTPResponseWithJSONItems() {
+        let (sut, client) = makeSUT()
+        
+        let profile1 = ProfileItem(id: UUID().uuidString,
+                                   name: "a name",
+                                   username: "a username",
+                                   imageURL: URL(string: "http://a-profile-image-url.com")!)
+        let item1 = FeedItem(id: UUID().uuidString,
+                             description: "a title",
+                             imageURL: URL(string: "http://an-image-url.com")!,
+                             likes: 0,
+                             profile: profile1)
+        let profile1JSON: [String: Any] = [
+            "id": profile1.id,
+            "name": profile1.name,
+            "username": profile1.username,
+            "profile_image": ["medium": profile1.imageURL.absoluteString]
+        ]
+        let item1JSON: [String: Any] = [
+            "id": item1.id,
+            "description": item1.description,
+            "urls": ["small": item1.imageURL.absoluteString],
+            "likes": item1.likes,
+            "user": profile1JSON
+        ]
+        
+        let profile2 = ProfileItem(id: UUID().uuidString,
+                                   name: "another name",
+                                   username: "another username",
+                                   imageURL: URL(string: "http://a-profile-image-url.com")!)
+        let item2 = FeedItem(id: UUID().uuidString,
+                             description: nil,
+                             imageURL: URL(string: "http://another-image-url.com")!,
+                             likes: 1,
+                             profile: profile2)
+        let profile2JSON: [String: Any] = [
+            "id": profile2.id,
+            "name": profile2.name,
+            "username": profile2.username,
+            "profile_image": ["medium": profile2.imageURL.absoluteString]
+        ]
+        let item2JSON: [String: Any] = [
+            "id": item2.id,
+            "urls": ["small": item2.imageURL.absoluteString],
+            "likes": item2.likes,
+            "user": profile2JSON
+        ]
+        
+        let items = [item1, item2]
+        let jsonItems = [item1JSON, item2JSON]
+        
+        expect(sut, toCompleteWith: .success(items), when: {
+            let itemsJSONList = try! JSONSerialization.data(withJSONObject: jsonItems)
+            client.complete(withStatusCode: 200, data: itemsJSONList)
+        })
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(url: URL = URL(string: "http://any-url.com")!) -> (RemoteFeedLoader, HTTPClientSpy) {
