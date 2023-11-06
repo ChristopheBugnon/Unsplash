@@ -22,24 +22,3 @@ public struct FeedItem: Equatable, Hashable {
         self.profile = profile
     }
 }
-
-extension FeedItem: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case description
-        case urls
-        case user
-        case likes
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try container.decode(String.self, forKey: .id)
-        description = try container.decodeIfPresent(String.self, forKey: .description)
-        let urls = try container.decode([String: URL].self, forKey: .urls)
-        imageURL = urls["small"]!
-        profile = try container.decode(ProfileItem.self, forKey: .user)
-        likes = try container.decode(Int.self, forKey: .likes)
-    }
-}
