@@ -17,7 +17,12 @@ public final class URLSessionHTTPClient: HTTPClient {
     private struct UnexpectedValuesRepresentation: Error {}
     
     public func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: url) { data, response, error in
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Client-ID GxTa3h-v4ci58nxl4fVT4JpHEruTIwnO8iJeCibjr2E",
+                         forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
             if let error {
                 completion(.failure(error))
             } else if let data, let response = response as? HTTPURLResponse {
