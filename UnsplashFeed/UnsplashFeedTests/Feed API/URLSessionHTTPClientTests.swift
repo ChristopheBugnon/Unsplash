@@ -72,7 +72,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_getFromURL_failsOnAllInvalidRepresentationCases() {
         let data = Data("any data".utf8)
         let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-        let anyHTTPURLResponse = HTTPURLResponse(url: anyURL(), statusCode: 0, httpVersion: nil, headerFields: nil)
+        let anyHTTPURLResponse = anyHTTPURLResponse()
         
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse, error: nil))
@@ -88,7 +88,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
         let url = anyURL()
         let data = Data("any data".utf8)
-        let response = HTTPURLResponse(url: url, statusCode: 0, httpVersion: nil, headerFields: nil)!
+        let response = anyHTTPURLResponse()
         URLProtocolStub.stub(data: data, response: response, error: nil)
         
         let exp = expectation(description: "Wait for get completion")
@@ -111,7 +111,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     func test_getFromURL_succeedsWithEmptyDataOnHTTPURLResponseWithNilData() {
         let url = anyURL()
-        let response = HTTPURLResponse(url: url, statusCode: 0, httpVersion: nil, headerFields: nil)!
+        let response = anyHTTPURLResponse()
         URLProtocolStub.stub(data: nil, response: response, error: nil)
         
         let exp = expectation(description: "Wait for get completion")
@@ -162,6 +162,10 @@ final class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         
         return receivedError
+    }
+    
+    private func anyHTTPURLResponse() -> HTTPURLResponse {
+        return HTTPURLResponse(url: anyURL(), statusCode: 0, httpVersion: nil, headerFields: nil)!
     }
     
     private func anyNSError() -> NSError {
