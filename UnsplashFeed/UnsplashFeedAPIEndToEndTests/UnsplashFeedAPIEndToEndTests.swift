@@ -11,9 +11,8 @@ import UnsplashFeed
 final class UnsplashFeedAPIEndToEndTests: XCTestCase {
 
     func test_endToEndTestServerGETFeedResult() {
-        let url = URL(string: "https://api.unsplash.com/photos")!
         let client = URLSessionHTTPClient()
-        let sut = RemoteFeedLoader(url: url, client: client)
+        let sut = RemoteFeedLoader(url: EndPoint.photos(page: 0).url(), client: client)
         
         let exp = expectation(description: "Wait for load completion")
         var receivedResult: LoadFeedResult?
