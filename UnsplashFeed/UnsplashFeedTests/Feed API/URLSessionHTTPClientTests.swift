@@ -70,7 +70,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_failsOnAllInvalidRepresentationCases() {
-        let data = Data("any data".utf8)
+        let data = anyData()
         let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
         let anyHTTPURLResponse = anyHTTPURLResponse()
         
@@ -87,7 +87,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
         let url = anyURL()
-        let data = Data("any data".utf8)
+        let data = anyData()
         let response = anyHTTPURLResponse()
         URLProtocolStub.stub(data: data, response: response, error: nil)
         
@@ -162,6 +162,10 @@ final class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         
         return receivedError
+    }
+    
+    private func anyData() -> Data {
+        return Data("any data".utf8)
     }
     
     private func anyHTTPURLResponse() -> HTTPURLResponse {
