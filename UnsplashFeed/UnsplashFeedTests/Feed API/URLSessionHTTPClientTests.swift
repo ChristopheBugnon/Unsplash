@@ -60,8 +60,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         let expectedError = NSError(domain: "Any error", code: 0)
         URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
         
-        let sut = URLSessionHTTPClient()
-        
         let exp = expectation(description: "Wait for get completion")
         makeSUT().get(from: url) { result in
             switch result {
@@ -81,8 +79,16 @@ final class URLSessionHTTPClientTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT() -> URLSessionHTTPClient {
-        return URLSessionHTTPClient()
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
+        let sut = URLSessionHTTPClient()
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
+    }
+    
+    private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak", file: file, line: line)
+        }
     }
     
     private final class URLProtocolStub: URLProtocol {
