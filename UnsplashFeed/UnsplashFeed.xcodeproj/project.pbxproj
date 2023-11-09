@@ -48,6 +48,7 @@
 		460C59802AFA8B240098EA58 /* UnsplashFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnsplashFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		460C59822AFA8B240098EA58 /* UnsplashFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		460C598C2AFA8F370098EA58 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		4612F7762AFCA708000F8493 /* CI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI.xctestplan; sourceTree = "<group>"; };
 		465969392AF8B597007DD333 /* UnsplashFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UnsplashFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		465969412AF8B597007DD333 /* UnsplashFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnsplashFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		465969512AF8B605007DD333 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 		4659692F2AF8B597007DD333 = {
 			isa = PBXGroup;
 			children = (
+				4612F7762AFCA708000F8493 /* CI.xctestplan */,
 				4659693B2AF8B597007DD333 /* UnsplashFeed */,
 				465969452AF8B597007DD333 /* UnsplashFeedTests */,
 				460C59812AFA8B240098EA58 /* UnsplashFeedAPIEndToEndTests */,
