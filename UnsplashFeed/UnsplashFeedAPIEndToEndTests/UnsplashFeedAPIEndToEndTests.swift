@@ -14,6 +14,9 @@ final class UnsplashFeedAPIEndToEndTests: XCTestCase {
         let client = URLSessionHTTPClient()
         let sut = RemoteFeedLoader(url: EndPoint.photos(page: 0).url(), client: client)
         
+        trackForMemoryLeaks(client)
+        trackForMemoryLeaks(sut)
+        
         let exp = expectation(description: "Wait for load completion")
         var receivedResult: LoadFeedResult?
         sut.load { result in
