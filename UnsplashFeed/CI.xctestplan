@@ -4,7 +4,9 @@
       "id" : "01A44E65-6C82-4B29-B1EF-5EA6359B746C",
       "name" : "Test Scheme Action",
       "options" : {
-
+        "addressSanitizer" : {
+          "enabled" : false
+        }
       }
     }
   ],
@@ -18,7 +20,9 @@
         }
       ]
     },
-    "testExecutionOrdering" : "random"
+    "testExecutionOrdering" : "random",
+    "threadSanitizerEnabled" : true,
+    "undefinedBehaviorSanitizerEnabled" : true
   },
   "testTargets" : [
     {
